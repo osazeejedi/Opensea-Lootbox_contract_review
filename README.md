@@ -114,13 +114,13 @@ setClassForTokenId nonpayable (uint256,uint256)
     uint256 _tokenId
     uint256 _classId
     
-setTokenIdsForClasses nonpayable ( Class , uint256[6])
+setTokenIdsForClass nonpayable (uint8,uint256[])
 
     Alternate way to add token ids to a class
 
     Parameters
-    _class
-    _tokenIds
+    uint8 _class
+    uint256[] _tokenIds
     
 resetClass nonpayable (uint256)
 
@@ -129,8 +129,76 @@ resetClass nonpayable (uint256)
     Parameters
     uint256 _classId
     
+setTokenIdsForClasses nonpayable (uint256[6])
+
+        Set token IDs for each rarity class. Bulk version of `setTokenIdForClass`
+
+        Parameters
+        uint256[6] _tokenIds: List of token IDs to set for each class, specified above in order
     
+setOptionSettings nonpayable (uint8,uint256,uint16[6],uint16[6])
+        Set the settings for a particular lootbox option
+
+        Parameters
+        uint8 _option: The Option to set settings for
+        uint256 _maxQuantityPerOpen: Maximum number of items to mint per open. Set to 0 to disable this option.
+        uint16[6] _classProbabilities: Array of probabilities (basis points, so integers out of 10,000) of receiving each class (the index in the array). Should add up to 10k and be descending in value.
+        uint16[6] _guarantees: Array of the number of guaranteed items received for each class (the index in the array).
     
+
+setSeed nonpayable (uint256)
+        Improve pseudorandom number generator by letting the owner set the seed manually, making attacks more difficult
+
+        Parameters
+        uint256 _newSeed: The new seed to use for the next transaction
+        
+## MAIN FUNCTIONS
+
+open nonpayable (uint256,address,uint256)
+        Open a lootbox manually and send what's inside to _toAddress Convenience method for contract owner.
+
+        Parameters
+        uint256 _optionId
+        address _toAddress
+        uint256 _amount
+        
+        
+_mint nonpayable (uint256,address,uint256,bytes)
+        minting logic for lootboxes which is called via safeTransferFrom when MyLootBox extends MyFactory.
+        NOTE: prices and fees are determined by the sell order on OpenSea.
+        Parameters
+        uint256 _optionId
+        address _toAddress
+        uint256 _amount
+        bytes _data
+        
+withdraw nonpayable ()
+
+
+## METADATA METHODS
+
+uri view (uint256)
+            Parameters
+            uint256 _optionId
+            Return Values
+            string _0
+            
+name view ()
+        
+        Return Values
+        string _0
+        
+        
+symbol view ()
+       
+        Return Values
+        string _0
+        
+## HELPER FUNCTIONS
+
+
+        
+
 
 
 
